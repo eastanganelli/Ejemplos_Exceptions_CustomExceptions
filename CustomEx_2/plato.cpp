@@ -36,6 +36,9 @@ unsigned int plato::get_cantPlatos() {
 }
 
 std::ostream& operator<<(std::ostream& out, const plato& data) {
+	if (&data == nullptr)
+		throw std::exception("No se puede imprimir un nullptr");
+
 	out << data.nombre << " $" << data.precio					   << std::endl
 		<< "Gluten Free: "     << (data.gluten_free ? "Si" : "No") << std::endl
 		<< "Dulce: "           << (data.dulce ? "Si" : "No")       << std::endl

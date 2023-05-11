@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <ctime>
+
 #include "menu.h"
 #include "customEx.h"
 #include "plato.h"
@@ -19,7 +22,29 @@ float entrada_de_datos() {
 	return (float)(val_1 / val_2);
 }
 
+unsigned int random_generator(int min, int max) {
+	return rand() % (max - min) + min;
+}
+
+menu generator_platos(unsigned int cant_platos) {
+	vector<string> platos = { "Milanesa", "Fideos", "Ravioles", "Noquis", "Asado", "Pizza", "Tarta", "Ensalada", "Helado", "Panqueue", "Tiramusu" };
+	menu auxdishes;
+
+	int i = 0;
+	while (i < cant_platos) {
+		string platito = platos[random_generator(1, platos.size()) - 1];
+		float precio = random_generator(500.00, 4000.00);
+		bool k_  = bool(random_generator(0, 1)),
+			 gf_ = bool(random_generator(0, 1)),
+			 d_  = bool(random_generator(0, 1));
+		auxdishes.push_back(plato(platito, precio, d_, k_, gf_));
+		i++;
+	}
+	return auxdishes;
+}
+
 int main() {
+	srand(time(NULL));
 	/*{
 		while (true) {
 			try {
@@ -34,11 +59,15 @@ int main() {
 
 	{
 		menu misPlatos;
-		misPlatos.push_back(plato("Milanesa", 2345.56, false, false, false));
-		misPlatos.push_back(plato("Ravioles", 2367.34, false, true, false));
-		misPlatos.push_back(plato("Helado", 1235.34, true, false, false));
+		misPlatos = generator_platos(7);
 
-		cout << *(misPlatos["Milanesa"]) << endl;
+		try {
+			cout << *(misPlatos["Milanesa"]) << endl;
+			cout << *(misPlatos["Helado"]) << endl;
+		}
+		catch (exception& e) {
+			cout << e.what() << endl;
+		}
 		
 	}
 
